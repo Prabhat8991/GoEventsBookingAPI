@@ -2,8 +2,8 @@ POST http://localhost:8080/events
 Content-Type: 'application/json'
 
 {
-    "name": "Standup Comedy",
-    "description": "Gaurav Kapoor Standup",
+    "name": "IPL",
+    "description": "RCB VS Chennai",
     "location": "Pune",
 	"time": "2025-01-01T15:30:00.000Z"
 }
