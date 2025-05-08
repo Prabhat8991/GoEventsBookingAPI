@@ -52,3 +52,30 @@ func createEvent(context *gin.Context) {
 	}
 	context.JSON(http.StatusCreated, gin.H{"message": "Event created"})
 }
+
+func updateEvent(context *gin.Context) {
+
+	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, "Could not parse ID")
+		return
+	}
+
+	_, err = models.GetEventById(id)
+
+	if err != nil {
+		context.JSON(http.StatusNotFound, "Could not find the event")
+		return
+	}
+
+	var updatedEvent models.Event
+	err = context.ShouldBindBodyWithJSON(&updatedEvent)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"Message": "Bad request"})
+		return
+	}
+
+	updatedEvent.UpdateEventById(id)
+}

@@ -6,5 +6,6 @@ func RegisterRoutes(server *gin.Engine) {
 	server.GET("/events", handleEvents)
 	server.GET("/events/:id", handleEvent)
 	server.POST("/events", createEvent)
+	server.PUT("/events/:id", updateEvent)
 	server.Run(":8080")
 }
