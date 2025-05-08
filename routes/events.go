@@ -79,3 +79,16 @@ func updateEvent(context *gin.Context) {
 
 	updatedEvent.UpdateEventById(id)
 }
+
+func deleteEvent(context *gin.Context) {
+
+	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, "Could not parse ID")
+		return
+	}
+
+	models.DeleteEventById(id)
+
+}
