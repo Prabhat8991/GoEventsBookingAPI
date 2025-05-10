@@ -25,3 +25,23 @@ func createUser(context *gin.Context) {
 	}
 	context.JSON(http.StatusOK, gin.H{"message": "User created"})
 }
+
+func login(context *gin.Context) {
+	var user models.User
+	err := context.ShouldBindJSON(&user)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"messgae": "Bad request"})
+		return
+	}
+
+	error := user.ValidateCredentials()
+
+	if error != nil {
+		context.JSON(http.StatusUnauthorized, gin.H{"Message": "Credentials do not match"})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"Message": "Login Successful"})
+
+}
