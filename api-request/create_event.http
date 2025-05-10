@@ -1,5 +1,6 @@
 POST http://localhost:8080/events
 Content-Type: 'application/json'
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiY0BnbWFpbC5jb20iLCJleHAiOjE3NDY4OTczMDEsInVzZXJpZCI6MH0.HnFrRxcD02-W_sWVpO0bQi_6p_fOcP96ZUWw3mgxz5c
 
 {
     "name": "IPL",

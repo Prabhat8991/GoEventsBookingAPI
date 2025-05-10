@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"api/api-request/utils"
 	"api/models"
 	"log"
 	"net/http"
@@ -42,6 +43,13 @@ func login(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{"Message": "Login Successful"})
+	token, err := utils.GenerateJwtToken(user.Email, user.ID)
+
+	if err != nil {
+		context.JSON(http.StatusUnauthorized, gin.H{"Token: error": err})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"Login Successful: token successful": token})
 
 }

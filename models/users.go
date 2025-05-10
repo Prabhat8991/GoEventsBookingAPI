@@ -32,13 +32,13 @@ func (user User) CreateUser() error {
 
 func (user User) ValidateCredentials() error {
 	query := `
-     SELECT password from users WHERE email = ?
+     SELECT id, password from users WHERE email = ?
    `
 	row := db.DB.QueryRow(query, user.Email)
 
 	var retrievePassword string
 
-	err := row.Scan(&retrievePassword)
+	err := row.Scan(&user.ID, &retrievePassword)
 
 	log.Println("Error scan", err)
 

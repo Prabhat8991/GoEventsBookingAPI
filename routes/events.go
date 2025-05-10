@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"api/api-request/utils"
 	"api/models"
 	"net/http"
 	"strconv"
@@ -37,6 +38,20 @@ func handleEvent(context *gin.Context) {
 }
 
 func createEvent(context *gin.Context) {
+	token := context.Request.Header.Get("Authorization")
+
+	if token == "" {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Not Authorized"})
+		return
+	}
+
+	error := utils.VerifyToken(token)
+
+	if error != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Not Authorized"})
+		return
+	}
+
 	var event models.Event
 	err := context.ShouldBindBodyWithJSON(&event) // Gin will parse incoming json to the event object
 	if err != nil {
@@ -45,7 +60,7 @@ func createEvent(context *gin.Context) {
 	}
 	event.ID = 1
 	event.UserID = 1001
-	error := event.Save()
+	error = event.Save()
 	if error != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Bad request"})
 		return
